@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const slides = [
@@ -11,7 +12,7 @@ const slides = [
     tagline: "ASSOCIATION LA MANNE SPIRITUELLE",
     cta: "Découvrir nos activités",
     ctaHref: "#activites",
-    bg: "linear-gradient(135deg, rgba(3,105,161,0.85) 0%, rgba(26,26,46,0.75) 100%)",
+    image: "/hero/slide1.png",
     emoji: "🌿",
   },
   {
@@ -21,7 +22,7 @@ const slides = [
     tagline: "ÉVANGÉLISATION & ENTRAIDE",
     cta: "À propos de nous",
     ctaHref: "#apropos",
-    bg: "linear-gradient(135deg, rgba(26,26,46,0.85) 0%, rgba(3,105,161,0.75) 100%)",
+    image: "/hero/slide2.png",
     emoji: "🤝",
   },
   {
@@ -31,7 +32,7 @@ const slides = [
     tagline: "MISSION & SPIRITUALITÉ",
     cta: "Nous rejoindre",
     ctaHref: "#contact",
-    bg: "linear-gradient(135deg, rgba(100,70,20,0.7) 0%, rgba(3,105,161,0.85) 100%)",
+    image: "/hero/slide3.png",
     emoji: "✨",
   },
 ];
@@ -74,33 +75,62 @@ export default function HeroSlider() {
         overflow: "hidden",
       }}
     >
-      {/* Background gradient */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(160deg, #0c2a45 0%, #0369A1 40%, #0EA5E9 70%, #0c2233 100%)",
-          transition: "background 1s ease",
-        }}
-      />
+      {/* Background image crossfade container */}
+      {slides.map((s, idx) => (
+        <div
+          key={s.id}
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: idx === current ? 1 : 0,
+            transition: "opacity 1s ease-in-out",
+            zIndex: 0,
+            background: "linear-gradient(160deg, #0c2a45 0%, #0369A1 40%, #0EA5E9 70%, #0c2233 100%)",
+          }}
+        >
+          {/* Background image */}
+          <Image
+            src={s.image}
+            alt={s.title}
+            fill
+            priority={idx === 0}
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+          />
+          {/* Dark Overlay for readability */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(12,42,69,0.85) 0%, rgba(3,105,161,0.7) 50%, rgba(12,34,51,0.9) 100%)",
+            }}
+          />
+        </div>
+      ))}
 
       {/* Animated pattern overlay */}
       <div
         style={{
           position: "absolute",
           inset: 0,
+          zIndex: 1,
           backgroundImage: `radial-gradient(circle at 20% 50%, rgba(14,165,233,0.3) 0%, transparent 50%),
                             radial-gradient(circle at 80% 20%, rgba(212,168,67,0.15) 0%, transparent 40%)`,
+          pointerEvents: "none",
         }}
       />
 
       {/* Floating décor elements */}
-      <div style={{ position: "absolute", top: "15%", right: "10%", opacity: 0.08, fontSize: "180px" }}>
+      <div style={{ position: "absolute", top: "15%", right: "10%", opacity: 0.08, fontSize: "180px", zIndex: 1 }}>
         ✦
       </div>
-      <div style={{ position: "absolute", bottom: "20%", left: "5%", opacity: 0.06, fontSize: "120px" }}>
+      <div style={{ position: "absolute", bottom: "20%", left: "5%", opacity: 0.06, fontSize: "120px", zIndex: 1 }}>
         ✦
       </div>
+
 
       {/* CONTENT */}
       <div
