@@ -308,29 +308,62 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Bottom right information */}
       <div
         style={{
           position: "absolute",
           bottom: "40px",
           right: "2rem",
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "6px",
-          opacity: 0.5,
+          alignItems: "flex-end",
+          gap: "24px",
+          zIndex: 10,
         }}
       >
-        <span style={{ fontSize: "11px", color: "#fff", letterSpacing: "1px", writingMode: "vertical-rl" }}>
-          DÉFILER
-        </span>
         <div
           style={{
-            width: "1px",
-            height: "40px",
-            background: "linear-gradient(to bottom, #fff, transparent)",
+            maxWidth: "280px",
+            textAlign: "right",
+            color: "#fff",
+            opacity: 0.85,
+            fontSize: "13px",
+            fontWeight: 500,
+            lineHeight: 1.5,
+            paddingBottom: "8px",
           }}
-        />
+          className="hide-mobile"
+        >
+          <strong style={{ color: "#38BDF8", display: "inline-flex", alignItems: "center", gap: "6px", justifyContent: "flex-end" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Réunion de prière
+          </strong><br />
+          tous les jeudis à 19h sur le terrain de Lakaza, non loin de Gbossimé.
+        </div>
+
+        {/* Scroll indicator */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "6px",
+            opacity: 0.5,
+          }}
+        >
+          <span style={{ fontSize: "11px", color: "#fff", letterSpacing: "1px", writingMode: "vertical-rl" }}>
+            DÉFILER
+          </span>
+          <div
+            style={{
+              width: "1px",
+              height: "40px",
+              background: "linear-gradient(to bottom, #fff, transparent)",
+            }}
+          />
+        </div>
       </div>
     </section>
   );

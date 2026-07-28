@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const navLinks = [
@@ -51,22 +52,16 @@ export default function Header() {
           href="#accueil"
           style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}
         >
-          <div
-            style={{
-              width: "42px",
-              height: "42px",
-              background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
-              borderRadius: "12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "22px",
-              boxShadow: "0 4px 12px rgba(14,165,233,0.35)",
-            }}
-          >
-            ✦
+          <div style={{ position: "relative", width: "50px", height: "50px" }}>
+            <Image
+              src="/logo.jpg"
+              alt="La Manne Spirituelle Logo"
+              fill
+              sizes="50px"
+              style={{ objectFit: "contain", borderRadius: "50%" }}
+            />
           </div>
-          <div>
+          <div className="hide-mobile">
             <p
               style={{
                 fontSize: "13px",

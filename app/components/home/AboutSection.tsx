@@ -1,10 +1,17 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
 const stats = [
   { id: "stat-membres", value: "500+", label: "Membres", icon: "👥" },
   { id: "stat-annees", value: "10+", label: "Années de ministère", icon: "📅" },
-  { id: "stat-projets", value: "30+", label: "Projets réalisés", icon: "🌟" },
+  { id: "stat-projets", value: "30+", label: "Projets réalisés", icon: "🌟", clickable: true },
 ];
 
 export default function AboutSection() {
+  const [showProjects, setShowProjects] = useState(false);
+
   return (
     <section
       id="apropos"
@@ -182,24 +189,93 @@ export default function AboutSection() {
                   <div
                     key={stat.id}
                     id={stat.id}
+                    onClick={() => {
+                      if (stat.clickable) setShowProjects(!showProjects);
+                    }}
                     style={{
                       textAlign: "center",
                       padding: "16px 8px",
                       borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.15)" : "none",
+                      cursor: stat.clickable ? "pointer" : "default",
+                      transition: "all 0.2s ease",
+                      background: stat.clickable && showProjects ? "rgba(255,255,255,0.15)" : "transparent",
+                      borderRadius: stat.clickable ? "12px" : "0",
+                    }}
+                    title={stat.clickable ? "Cliquez pour voir les projets" : ""}
+                    onMouseEnter={(e) => {
+                      if (stat.clickable) e.currentTarget.style.background = "rgba(255,255,255,0.15)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (stat.clickable && !showProjects) e.currentTarget.style.background = "transparent";
                     }}
                   >
-                    <div style={{ fontSize: "22px", marginBottom: "4px" }}>{stat.icon}</div>
+                    <div style={{ fontSize: "22px", marginBottom: "4px" }}>
+                      {stat.icon}
+                    </div>
                     <div style={{ fontSize: "28px", fontWeight: 900, lineHeight: 1 }}>
                       {stat.value}
                     </div>
                     <div
-                      style={{ fontSize: "11px", opacity: 0.65, marginTop: "4px", lineHeight: 1.3 }}
+                      style={{ fontSize: "11px", opacity: 0.65, marginTop: "4px", lineHeight: 1.3, display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}
                     >
-                      {stat.label}
+                      {stat.label} {stat.clickable && <span style={{ fontSize: "8px" }}>▼</span>}
                     </div>
                   </div>
                 ))}
               </div>
+
+              {/* Expandable Projects List */}
+              {showProjects && (
+                <div
+                  style={{
+                    marginTop: "24px",
+                    paddingTop: "24px",
+                    borderTop: "1px solid rgba(255,255,255,0.15)",
+                    position: "relative",
+                    zIndex: 1,
+                    animation: "fadeInUp 0.3s ease",
+                  }}
+                >
+                  <p style={{ fontSize: "13px", fontWeight: 700, marginBottom: "16px", letterSpacing: "1px", textTransform: "uppercase", opacity: 0.8 }}>
+                    Catégories de projets :
+                  </p>
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px", padding: 0, margin: 0 }}>
+                    {[
+                      { title: "Les Évangélisations", slug: "evangelisations" },
+                      { title: "Les Croisades", slug: "croisades" },
+                      { title: "Les Conférences réalisées", slug: "conferences" },
+                      { title: "Projet Agropastoral", slug: "agropastoral" },
+                    ].map((proj, idx) => (
+                      <li key={idx}>
+                        <Link
+                          href={`/projets/${proj.slug}`}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "12px",
+                            fontSize: "15px",
+                            fontWeight: 500,
+                            color: "#fff",
+                            textDecoration: "none",
+                            padding: "8px 12px",
+                            borderRadius: "8px",
+                            transition: "background 0.2s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                          }}
+                        >
+                          <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "24px", height: "24px", background: "rgba(255,255,255,0.2)", borderRadius: "50%", fontSize: "12px" }}>✓</span>
+                          {proj.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
             {/* Quote card */}

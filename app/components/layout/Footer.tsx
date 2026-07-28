@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = [
   { label: "Accueil", href: "#accueil" },
@@ -75,21 +76,14 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-              <div
-                style={{
-                  width: "42px",
-                  height: "42px",
-                  background: "rgba(255,255,255,0.15)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "22px",
-                  backdropFilter: "blur(4px)",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                }}
-              >
-                ✦
+              <div style={{ position: "relative", width: "50px", height: "50px", background: "#fff", borderRadius: "50%" }}>
+                <Image
+                  src="/logo.jpg"
+                  alt="La Manne Spirituelle Logo"
+                  fill
+                  sizes="50px"
+                  style={{ objectFit: "contain", borderRadius: "50%", padding: "4px" }}
+                />
               </div>
               <div>
                 <p style={{ fontSize: "12px", opacity: 0.7, lineHeight: 1 }}>LA</p>
