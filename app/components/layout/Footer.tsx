@@ -50,7 +50,7 @@ export default function Footer() {
     <footer
       id="contact"
       style={{
-        background: "linear-gradient(135deg, #1E6332 0%, #2D8C45 60%, #1a5c2a 100%)",
+        background: "linear-gradient(135deg, #0c2a45 0%, #0369A1 60%, #0284C7 100%)",
         color: "#fff",
         paddingTop: "60px",
       }}
@@ -93,17 +93,29 @@ export default function Footer() {
               </div>
               <div>
                 <p style={{ fontSize: "12px", opacity: 0.7, lineHeight: 1 }}>LA</p>
-                <p style={{ fontSize: "16px", fontWeight: 800, lineHeight: 1.1 }}>Manne Spirituelle</p>
+                <p style={{ fontSize: "16px", fontWeight: 800, lineHeight: 1.1 }}>
+                  Manne Spirituelle
+                </p>
               </div>
             </div>
             <p style={{ fontSize: "14px", opacity: 0.75, lineHeight: 1.7, maxWidth: "280px" }}>
-              Une communauté fondée sur la foi, l'amour et le service. Ensemble, nous grandissons dans la grâce de Dieu.
+              Une communauté fondée sur la foi, l'amour et le service. Ensemble, nous
+              grandissons dans la grâce de Dieu.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 style={{ fontSize: "14px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", opacity: 0.5, marginBottom: "20px" }}>
+            <h3
+              style={{
+                fontSize: "14px",
+                fontWeight: 700,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                opacity: 0.5,
+                marginBottom: "20px",
+              }}
+            >
               Navigation
             </h3>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -117,8 +129,12 @@ export default function Footer() {
                       fontSize: "14px",
                       transition: "color 0.2s",
                     }}
-                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#fff")}
-                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.8)")}
+                    onMouseEnter={(e) =>
+                      ((e.target as HTMLElement).style.color = "#fff")
+                    }
+                    onMouseLeave={(e) =>
+                      ((e.target as HTMLElement).style.color = "rgba(255,255,255,0.8)")
+                    }
                   >
                     → {link.label}
                   </Link>
@@ -129,10 +145,21 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 style={{ fontSize: "14px", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", opacity: 0.5, marginBottom: "20px" }}>
+            <h3
+              style={{
+                fontSize: "14px",
+                fontWeight: 700,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                opacity: 0.5,
+                marginBottom: "20px",
+              }}
+            >
               Contact
             </h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "14px", opacity: 0.8 }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "14px", opacity: 0.8 }}
+            >
               <p>📍 Lomé, Togo</p>
               <p>📞 +228 XX XX XX XX</p>
               <p>✉️ contact@mannespirituelle.org</p>
@@ -189,8 +216,12 @@ export default function Footer() {
         >
           <p>© {new Date().getFullYear()} La Manne Spirituelle — Tous droits réservés.</p>
           <div style={{ display: "flex", gap: "16px" }}>
-            <Link href="#" style={{ color: "inherit", textDecoration: "none" }}>Mentions légales</Link>
-            <Link href="#" style={{ color: "inherit", textDecoration: "none" }}>Confidentialité</Link>
+            <Link href="#" style={{ color: "inherit", textDecoration: "none" }}>
+              Mentions légales
+            </Link>
+            <Link href="#" style={{ color: "inherit", textDecoration: "none" }}>
+              Confidentialité
+            </Link>
           </div>
         </div>
       </div>

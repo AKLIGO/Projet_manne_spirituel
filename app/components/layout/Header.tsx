@@ -30,9 +30,7 @@ export default function Header() {
         right: 0,
         zIndex: 1000,
         transition: "all 0.4s ease",
-        background: scrolled
-          ? "rgba(255,255,255,0.97)"
-          : "transparent",
+        background: scrolled ? "rgba(255,255,255,0.97)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.1)" : "none",
         padding: "0 2rem",
@@ -57,13 +55,13 @@ export default function Header() {
             style={{
               width: "42px",
               height: "42px",
-              background: "linear-gradient(135deg, #2D8C45, #4CAF68)",
+              background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
               borderRadius: "12px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontSize: "22px",
-              boxShadow: "0 4px 12px rgba(45,140,69,0.35)",
+              boxShadow: "0 4px 12px rgba(14,165,233,0.35)",
             }}
           >
             ✦
@@ -73,7 +71,7 @@ export default function Header() {
               style={{
                 fontSize: "13px",
                 fontWeight: 600,
-                color: scrolled ? "#2D8C45" : "#fff",
+                color: scrolled ? "#0EA5E9" : "#fff",
                 lineHeight: 1,
                 letterSpacing: "0.5px",
               }}
@@ -110,8 +108,8 @@ export default function Header() {
                 transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                (e.target as HTMLElement).style.color = "#2D8C45";
-                (e.target as HTMLElement).style.background = "rgba(45,140,69,0.08)";
+                (e.target as HTMLElement).style.color = "#0EA5E9";
+                (e.target as HTMLElement).style.background = "rgba(14,165,233,0.08)";
               }}
               onMouseLeave={(e) => {
                 (e.target as HTMLElement).style.color = scrolled
@@ -134,17 +132,17 @@ export default function Header() {
               fontSize: "14px",
               fontWeight: 600,
               color: "#fff",
-              background: "linear-gradient(135deg, #2D8C45, #4CAF68)",
-              boxShadow: "0 4px 14px rgba(45,140,69,0.4)",
+              background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
+              boxShadow: "0 4px 14px rgba(14,165,233,0.4)",
               transition: "all 0.3s ease",
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(45,140,69,0.5)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(14,165,233,0.5)";
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(45,140,69,0.4)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(14,165,233,0.4)";
             }}
           >
             Nous Contacter
@@ -207,7 +205,7 @@ export default function Header() {
               padding: "12px",
               textAlign: "center",
               borderRadius: "50px",
-              background: "linear-gradient(135deg, #2D8C45, #4CAF68)",
+              background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
               color: "#fff",
               fontWeight: 600,
               textDecoration: "none",

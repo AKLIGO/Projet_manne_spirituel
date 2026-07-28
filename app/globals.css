@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --green-primary: #2D8C45;
-  --green-dark: #1E6332;
-  --green-light: #4CAF68;
-  --green-pale: #E8F5EC;
+  --blue-primary: #0EA5E9;
+  --blue-dark: #0369A1;
+  --blue-light: #38BDF8;
+  --blue-pale: #E0F2FE;
   --gold: #D4A843;
   --gold-light: #F0C965;
   --text-dark: #1A1A2E;
@@ -51,9 +51,9 @@ body {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes pulse-green {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 140, 69, 0.4); }
-  50%       { box-shadow: 0 0 0 12px rgba(45, 140, 69, 0); }
+@keyframes pulse-blue {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
+  50%       { box-shadow: 0 0 0 12px rgba(14, 165, 233, 0); }
 }
 
 @keyframes float {
@@ -81,4 +81,4 @@ body {
 /* ─── Scrollbar ─────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-light); }
-::-webkit-scrollbar-thumb { background: var(--green-primary); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--blue-primary); border-radius: 3px; }

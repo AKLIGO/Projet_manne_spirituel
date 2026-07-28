@@ -11,7 +11,7 @@ const slides = [
     tagline: "ASSOCIATION LA MANNE SPIRITUELLE",
     cta: "Découvrir nos activités",
     ctaHref: "#activites",
-    bg: "linear-gradient(135deg, rgba(30,99,50,0.85) 0%, rgba(26,26,46,0.75) 100%)",
+    bg: "linear-gradient(135deg, rgba(3,105,161,0.85) 0%, rgba(26,26,46,0.75) 100%)",
     emoji: "🌿",
   },
   {
@@ -21,7 +21,7 @@ const slides = [
     tagline: "ÉVANGÉLISATION & ENTRAIDE",
     cta: "À propos de nous",
     ctaHref: "#apropos",
-    bg: "linear-gradient(135deg, rgba(26,26,46,0.85) 0%, rgba(30,99,50,0.75) 100%)",
+    bg: "linear-gradient(135deg, rgba(26,26,46,0.85) 0%, rgba(3,105,161,0.75) 100%)",
     emoji: "🤝",
   },
   {
@@ -31,7 +31,7 @@ const slides = [
     tagline: "MISSION & SPIRITUALITÉ",
     cta: "Nous rejoindre",
     ctaHref: "#contact",
-    bg: "linear-gradient(135deg, rgba(100,70,20,0.7) 0%, rgba(30,99,50,0.85) 100%)",
+    bg: "linear-gradient(135deg, rgba(100,70,20,0.7) 0%, rgba(3,105,161,0.85) 100%)",
     emoji: "✨",
   },
 ];
@@ -74,12 +74,12 @@ export default function HeroSlider() {
         overflow: "hidden",
       }}
     >
-      {/* Background gradient (placeholder pour votre future photo) */}
+      {/* Background gradient */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(160deg, #0d3320 0%, #1E6332 40%, #2D8C45 70%, #1a2e1a 100%)",
+          background: "linear-gradient(160deg, #0c2a45 0%, #0369A1 40%, #0EA5E9 70%, #0c2233 100%)",
           transition: "background 1s ease",
         }}
       />
@@ -89,7 +89,7 @@ export default function HeroSlider() {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(45,140,69,0.3) 0%, transparent 50%),
+          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(14,165,233,0.3) 0%, transparent 50%),
                             radial-gradient(circle at 80% 20%, rgba(212,168,67,0.15) 0%, transparent 40%)`,
         }}
       />
@@ -161,7 +161,7 @@ export default function HeroSlider() {
               fontSize: "clamp(2rem, 5vw, 3.8rem)",
               fontWeight: 900,
               lineHeight: 1.1,
-              background: "linear-gradient(90deg, #4CAF68, #F0C965)",
+              background: "linear-gradient(90deg, #38BDF8, #F0C965)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -181,7 +181,8 @@ export default function HeroSlider() {
               marginBottom: "44px",
             }}
           >
-            Une communauté chrétienne unie autour de la Parole de Dieu, dédiée à l'évangélisation, la prière et l'entraide fraternelle.
+            Une communauté chrétienne unie autour de la Parole de Dieu, dédiée à
+            l'évangélisation, la prière et l'entraide fraternelle.
           </p>
 
           {/* CTAs */}
@@ -199,17 +200,17 @@ export default function HeroSlider() {
                 fontSize: "15px",
                 fontWeight: 700,
                 color: "#fff",
-                background: "linear-gradient(135deg, #2D8C45, #4CAF68)",
-                boxShadow: "0 6px 24px rgba(45,140,69,0.5)",
+                background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
+                boxShadow: "0 6px 24px rgba(14,165,233,0.5)",
                 transition: "all 0.3s ease",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 10px 32px rgba(45,140,69,0.6)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 10px 32px rgba(14,165,233,0.6)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 24px rgba(45,140,69,0.5)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 24px rgba(14,165,233,0.5)";
               }}
             >
               {slide.cta} →
@@ -268,7 +269,7 @@ export default function HeroSlider() {
                 borderRadius: "5px",
                 border: "none",
                 cursor: "pointer",
-                background: i === current ? "#F0C965" : "rgba(255,255,255,0.35)",
+                background: i === current ? "#38BDF8" : "rgba(255,255,255,0.35)",
                 transition: "all 0.4s ease",
                 padding: 0,
               }}

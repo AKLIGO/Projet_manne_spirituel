@@ -19,8 +19,8 @@ export default function AboutSection() {
           <span
             style={{
               display: "inline-block",
-              background: "linear-gradient(135deg, #E8F5EC, #c8ead0)",
-              color: "#2D8C45",
+              background: "linear-gradient(135deg, #E0F2FE, #bae6fd)",
+              color: "#0EA5E9",
               fontSize: "12px",
               fontWeight: 700,
               letterSpacing: "2px",
@@ -55,7 +55,7 @@ export default function AboutSection() {
               Une association ancrée dans{" "}
               <span
                 style={{
-                  background: "linear-gradient(135deg, #2D8C45, #4CAF68)",
+                  background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -67,14 +67,15 @@ export default function AboutSection() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <p style={{ fontSize: "16px", color: "#4B5563", lineHeight: 1.8 }}>
-                Fondée sur les valeurs de l'Évangile, <strong>La Manne Spirituelle</strong> est une
-                communauté chrétienne dynamique dédiée à la croissance spirituelle, l'entraide
-                fraternelle et l'évangélisation.
+                Fondée sur les valeurs de l'Évangile,{" "}
+                <strong>La Manne Spirituelle</strong> est une communauté chrétienne
+                dynamique dédiée à la croissance spirituelle, l'entraide fraternelle et
+                l'évangélisation.
               </p>
               <p style={{ fontSize: "16px", color: "#4B5563", lineHeight: 1.8 }}>
-                Nous croyons en la puissance transformatrice de la Parole de Dieu et nous nous
-                engageons à la vivre et à la partager avec tous. Notre mission est d'être un pont
-                entre la grâce divine et les besoins humains.
+                Nous croyons en la puissance transformatrice de la Parole de Dieu et nous
+                nous engageons à la vivre et à la partager avec tous. Notre mission est
+                d'être un pont entre la grâce divine et les besoins humains.
               </p>
             </div>
 
@@ -83,7 +84,7 @@ export default function AboutSection() {
               {[
                 { icon: "📖", text: "Étude approfondie de la Bible" },
                 { icon: "🙏", text: "Prière et intercession communautaire" },
-                { icon: "💚", text: "Entraide et solidarité fraternelle" },
+                { icon: "💙", text: "Entraide et solidarité fraternelle" },
               ].map((item, i) => (
                 <div
                   key={i}
@@ -111,16 +112,16 @@ export default function AboutSection() {
             {/* Main card */}
             <div
               style={{
-                background: "linear-gradient(135deg, #1E6332 0%, #2D8C45 100%)",
+                background: "linear-gradient(135deg, #0369A1 0%, #0EA5E9 100%)",
                 borderRadius: "20px",
                 padding: "36px 32px",
                 color: "#fff",
                 position: "relative",
                 overflow: "hidden",
-                boxShadow: "0 20px 50px rgba(45,140,69,0.3)",
+                boxShadow: "0 20px 50px rgba(14,165,233,0.3)",
               }}
             >
-              {/* Decorative circle */}
+              {/* Decorative circles */}
               <div
                 style={{
                   position: "absolute",
@@ -191,7 +192,9 @@ export default function AboutSection() {
                     <div style={{ fontSize: "28px", fontWeight: 900, lineHeight: 1 }}>
                       {stat.value}
                     </div>
-                    <div style={{ fontSize: "11px", opacity: 0.65, marginTop: "4px", lineHeight: 1.3 }}>
+                    <div
+                      style={{ fontSize: "11px", opacity: 0.65, marginTop: "4px", lineHeight: 1.3 }}
+                    >
                       {stat.label}
                     </div>
                   </div>

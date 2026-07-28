@@ -7,16 +7,18 @@ const activities = [
     id: "act-evangelisation",
     icon: "📢",
     title: "Évangélisation",
-    description: "Partage de la Bonne Nouvelle dans les quartiers, marchés et lieux publics à travers des actions de rue et des croisades.",
-    color: "#2D8C45",
-    bg: "#E8F5EC",
+    description:
+      "Partage de la Bonne Nouvelle dans les quartiers, marchés et lieux publics à travers des actions de rue et des croisades.",
+    color: "#0EA5E9",
+    bg: "#E0F2FE",
     tag: "Mission",
   },
   {
     id: "act-priere",
     icon: "🙏",
     title: "Prière & Adoration",
-    description: "Réunions de prière, nuits de veille et sessions d'adoration pour fortifier la vie spirituelle de chaque membre.",
+    description:
+      "Réunions de prière, nuits de veille et sessions d'adoration pour fortifier la vie spirituelle de chaque membre.",
     color: "#7C3AED",
     bg: "#F3EEFF",
     tag: "Spiritualité",
@@ -25,7 +27,8 @@ const activities = [
     id: "act-bible",
     icon: "📖",
     title: "Études Bibliques",
-    description: "Sessions régulières d'étude approfondie de la Parole de Dieu, en groupe et en sous-groupes par tranche d'âge.",
+    description:
+      "Sessions régulières d'étude approfondie de la Parole de Dieu, en groupe et en sous-groupes par tranche d'âge.",
     color: "#D97706",
     bg: "#FEF3C7",
     tag: "Formation",
@@ -34,7 +37,8 @@ const activities = [
     id: "act-jeunesse",
     icon: "👶",
     title: "Ministère Jeunesse",
-    description: "Programmes dédiés à la jeunesse : camps, activités culturelles et spirituelles pour les enfants et adolescents.",
+    description:
+      "Programmes dédiés à la jeunesse : camps, activités culturelles et spirituelles pour les enfants et adolescents.",
     color: "#DB2777",
     bg: "#FDE7F3",
     tag: "Jeunesse",
@@ -43,18 +47,20 @@ const activities = [
     id: "act-entraide",
     icon: "🤝",
     title: "Entraide Sociale",
-    description: "Aide aux familles dans le besoin, visites aux malades et aux prisonniers, distribution de vivres et de matériel.",
-    color: "#0891B2",
-    bg: "#E0F7FA",
+    description:
+      "Aide aux familles dans le besoin, visites aux malades et aux prisonniers, distribution de vivres et de matériel.",
+    color: "#0369A1",
+    bg: "#E0F2FE",
     tag: "Social",
   },
   {
     id: "act-formation",
     icon: "🎓",
     title: "Formation & Leadership",
-    description: "Formation de leaders chrétiens, ateliers de développement personnel et sessions de mentoring pour serviteurs de Dieu.",
-    color: "#059669",
-    bg: "#D1FAE5",
+    description:
+      "Formation de leaders chrétiens, ateliers de développement personnel et sessions de mentoring pour serviteurs de Dieu.",
+    color: "#0284C7",
+    bg: "#BAE6FD",
     tag: "Leadership",
   },
 ];
@@ -76,8 +82,8 @@ export default function ActivitiesSection() {
           <span
             style={{
               display: "inline-block",
-              background: "linear-gradient(135deg, #E8F5EC, #c8ead0)",
-              color: "#2D8C45",
+              background: "linear-gradient(135deg, #E0F2FE, #bae6fd)",
+              color: "#0EA5E9",
               fontSize: "12px",
               fontWeight: 700,
               letterSpacing: "2px",
@@ -109,7 +115,8 @@ export default function ActivitiesSection() {
               lineHeight: 1.7,
             }}
           >
-            Nous œuvrons dans plusieurs domaines pour accomplir notre mission et répondre aux besoins de notre communauté.
+            Nous œuvrons dans plusieurs domaines pour accomplir notre mission et répondre
+            aux besoins de notre communauté.
           </p>
         </div>
 
@@ -186,10 +193,9 @@ export default function ActivitiesSection() {
                 style={{
                   fontSize: "17px",
                   fontWeight: 700,
-                  color: "#1A1A2E",
+                  color: hovered === act.id ? act.color : "#1A1A2E",
                   marginBottom: "10px",
                   transition: "color 0.2s",
-                  ...(hovered === act.id ? { color: act.color } : {}),
                 }}
               >
                 {act.title}
