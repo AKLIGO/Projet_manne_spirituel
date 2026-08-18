@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ==========================================
+// 1. ÉNUMÉRATIONS (Listes de choix fixes)
+// ==========================================
+enum Role {
+  ADMIN
+  MEMBER
+  VISITOR
+}
+
+enum ProjectStatus {
+  PLANNING   
+  ACTIVE     
+  COMPLETED  
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+// ==========================================
+// 2. MODÈLES PRINCIPAUX (Tables)
+// ==========================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  firstName     String
+  lastName      String
+  
+  profileImage  String?   
+  bio           String?   @db.Text
+  church        String?   
+
+  role          Role      @default(VISITOR)
+  createdAt     DateTime  @default(now())
+
+  projects      Project[]      
+  registrations Registration[] 
+  donations     Donation[]     
+}
+
+model Project {
+  id            String        @id @default(cuid())
+  title         String
+  description   String        @db.Text
+  targetAmount  Float?        
+  currentAmount Float         @default(0) 
+  status        ProjectStatus @default(PLANNING)
+  createdAt     DateTime      @default(now())
+
+  authorId      String
+  author        User          @relation(fields: [authorId], references: [id])
+  donations     Donation[]    
+  media         Media[]       
+}
+
+model Activity {
+  id              String    @id @default(cuid())
+  title           String
+  description     String    @db.Text
+  startDate       DateTime
+  location        String
+  maxParticipants Int?      
+  createdAt       DateTime  @default(now())
+
+  registrations   Registration[] 
+  media           Media[]        
+}
+
+// ==========================================
+// 3. TABLES DE LIAISON ET DONNÉES ANNEXES
+// ==========================================
+
+model Registration {
+  id            String    @id @default(cuid())
+  registeredAt  DateTime  @default(now())
+  status        String    @default("CONFIRMED") 
+
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  activityId    String
+  activity      Activity  @relation(fields: [activityId], references: [id])
+
+  @@unique([userId, activityId]) 
+}
+
+model Donation {
+  id            String    @id @default(cuid())
+  amount        Float
+  paymentMethod String    
+  donationDate  DateTime  @default(now())
+  status        String    @default("COMPLETED")
+
+  userId        String?   
+  user          User?     @relation(fields: [userId], references: [id])
+  
+  projectId     String?   
+  project       Project?  @relation(fields: [projectId], references: [id])
+}
+
+model Media {
+  id          String    @id @default(cuid())
+  url         String    
+  type        MediaType @default(IMAGE)
+  altText     String?   
+
+  projectId   String?
+  project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  activityId  String?
+  activity    Activity? @relation(fields: [activityId], references: [id], onDelete: Cascade)
+}

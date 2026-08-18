@@ -155,8 +155,8 @@ export default function Footer() {
               style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "14px", opacity: 0.8 }}
             >
               <p>📍 Lomé, Togo</p>
-              <p>📞 +228 XX XX XX XX</p>
-              <p>✉️ contact@mannespirituelle.org</p>
+              <p>📞 +228 98683071 / +228 91221065</p>
+              <p>✉️ timotheemlagani@gmail.com</p>
             </div>
 
             {/* Social */}

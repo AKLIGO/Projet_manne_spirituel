@@ -1,7 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: [
+    "@prisma/adapter-mariadb",
+    "mariadb",
+    "@prisma/client",
+  ],
+  images: {
+    remotePatterns: [],
+    localPatterns: [
+      {
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

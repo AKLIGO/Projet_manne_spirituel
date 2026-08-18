@@ -1,19 +1,26 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Image from "next/image";
+import fs from "fs";
+import path from "path";
+import ProjectHeroBackground from "./ProjectHeroBackground";
+import ProjectGallery from "./ProjectGallery";
 
 // Define the static data for the projects
-const projectData: Record<string, { title: string; subtitle: string; description: string; icon: string }> = {
+const projectData: Record<string, { title: string; subtitle: string; description: string; icon: string; folderName?: string }> = {
   evangelisations: {
     title: "Les Évangélisations",
     subtitle: "Répandre la Bonne Nouvelle",
     description: "Nous organisons des campagnes d'évangélisation dans les rues, les quartiers et les villages pour apporter le message de paix, d'amour et de salut de Jésus-Christ à tous ceux qui en ont besoin. Notre approche se veut respectueuse et pleine d'amour fraternel.",
     icon: "📢",
+    folderName: "evangelisation",
   },
   croisades: {
     title: "Les Croisades",
     subtitle: "Grands rassemblements spirituels",
     description: "Les croisades sont des événements majeurs où nous réunissons plusieurs communautés pour prier, louer et partager la parole de Dieu. Ces rencontres sont des moments forts de guérison spirituelle, de témoignages et de transformation de vies.",
     icon: "🕊️",
+    folderName: "croisade",
   },
   conferences: {
     title: "Conférences Réalisées",
@@ -26,6 +33,7 @@ const projectData: Record<string, { title: string; subtitle: string; description
     subtitle: "Soutenir la communauté par le travail de la terre",
     description: "Ce projet vise à créer une ferme communautaire pour assurer une sécurité alimentaire tout en offrant des opportunités de formation professionnelle aux jeunes. Il symbolise notre engagement envers le développement durable et l'autonomie financière de notre communauté.",
     icon: "🌱",
+    folderName: "agropastoral",
   },
 };
 
@@ -39,19 +47,40 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
+  // Load images if a folderName is defined
+  let allImages: string[] = [];
+  if (project.folderName) {
+    try {
+      const dirPath = path.join(process.cwd(), "public", project.folderName);
+      if (fs.existsSync(dirPath)) {
+        allImages = fs.readdirSync(dirPath).filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file));
+      }
+    } catch (e) {
+      console.error("Failed to read image directory:", e);
+    }
+  }
+
+  const heroImages = allImages.filter(img => /responsable|presidente/i.test(img));
+  const galleryImages = allImages.filter(img => !/responsable|presidente/i.test(img));
+
   return (
     <main style={{ minHeight: "100vh", background: "#f8fafc" }}>
       {/* Hero Section */}
       <section
         style={{
           padding: "160px 2rem 80px",
-          background: "linear-gradient(135deg, #0369A1 0%, #0EA5E9 100%)",
           color: "#fff",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
         }}
       >
+        {project.folderName ? (
+          <ProjectHeroBackground images={heroImages} folderName={project.folderName} />
+        ) : (
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #0369A1 0%, #0EA5E9 100%)", zIndex: 0 }} />
+        )}
+        
         <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
           <div style={{ fontSize: "64px", marginBottom: "16px" }}>{project.icon}</div>
           <h1
@@ -127,6 +156,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       </section>
+
+      {/* Gallery Section */}
+      {project.folderName && (
+        <ProjectGallery images={galleryImages} folderName={project.folderName} title={project.title} />
+      )}
     </main>
   );
 }

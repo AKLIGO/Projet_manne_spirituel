@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 const navLinks = [
   { label: "Accueil", href: "#accueil" },
@@ -14,6 +15,8 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -116,32 +119,80 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="#contact"
-            id="btn-contact-header"
-            style={{
-              textDecoration: "none",
-              marginLeft: "8px",
-              padding: "10px 22px",
-              borderRadius: "50px",
-              fontSize: "14px",
-              fontWeight: 600,
-              color: "#fff",
-              background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
-              boxShadow: "0 4px 14px rgba(14,165,233,0.4)",
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(14,165,233,0.5)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(14,165,233,0.4)";
-            }}
-          >
-            Nous Contacter
-          </Link>
+          {/* Boutons Connexion / Profil */}
+          {isLoggedIn ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "8px" }}>
+              <Link
+                href="/profil"
+                style={{
+                  textDecoration: "none",
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  color: scrolled ? "#374151" : "rgba(255,255,255,0.9)",
+                  transition: "all 0.2s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                👤 Mon Profil
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "50px",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "#fff",
+                  background: "linear-gradient(135deg, #EF4444, #F87171)",
+                  boxShadow: "0 4px 14px rgba(239,68,68,0.4)",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                Déconnexion
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "8px" }}>
+              <Link
+                href="/login"
+                style={{
+                  textDecoration: "none",
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  color: scrolled ? "#374151" : "rgba(255,255,255,0.9)",
+                  border: scrolled ? "1px solid #E5E7EB" : "1px solid rgba(255,255,255,0.4)",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                Connexion
+              </Link>
+              <Link
+                href="/register"
+                id="btn-register-header"
+                style={{
+                  textDecoration: "none",
+                  padding: "10px 22px",
+                  borderRadius: "50px",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "#fff",
+                  background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
+                  boxShadow: "0 4px 14px rgba(14,165,233,0.4)",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                S'inscrire
+              </Link>
+            </div>
+          )}
         </nav>
 
         {/* HAMBURGER MOBILE */}
@@ -191,23 +242,79 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            style={{
-              display: "block",
-              marginTop: "12px",
-              padding: "12px",
-              textAlign: "center",
-              borderRadius: "50px",
-              background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
-              color: "#fff",
-              fontWeight: 600,
-              textDecoration: "none",
-            }}
-          >
-            Nous Contacter
-          </Link>
+          {/* Mobile: Boutons Connexion/Profil */}
+          {isLoggedIn ? (
+            <>
+              <Link
+                href="/profil"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  padding: "12px 0",
+                  textDecoration: "none",
+                  color: "#374151",
+                  fontWeight: 500,
+                  fontSize: "15px",
+                  borderBottom: "1px solid #F3F4F6",
+                }}
+              >
+                👤 Mon Profil
+              </Link>
+              <button
+                onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/" }) }}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  marginTop: "12px",
+                  padding: "12px",
+                  textAlign: "center",
+                  borderRadius: "50px",
+                  background: "linear-gradient(135deg, #EF4444, #F87171)",
+                  color: "#fff",
+                  fontWeight: 600,
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                Déconnexion
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  padding: "12px 0",
+                  textDecoration: "none",
+                  color: "#374151",
+                  fontWeight: 500,
+                  fontSize: "15px",
+                  borderBottom: "1px solid #F3F4F6",
+                }}
+              >
+                Connexion
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  marginTop: "12px",
+                  padding: "12px",
+                  textAlign: "center",
+                  borderRadius: "50px",
+                  background: "linear-gradient(135deg, #0EA5E9, #38BDF8)",
+                  color: "#fff",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                S'inscrire
+              </Link>
+            </>
+          )}
         </div>
       )}
 
