@@ -29,13 +29,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'La photo ne doit pas dépasser 5MB.' }, { status: 400 })
     }
 
+    const folder = (formData.get('folder') as string) || 'profiles'
+    const isProfileUpload = folder === 'profiles'
+
     // Créer le dossier si inexistant
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'profiles')
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads', folder)
     await mkdir(uploadDir, { recursive: true })
 
     // Générer un nom de fichier unique
     const ext = file.name.split('.').pop()
-    const filename = `profile-${session.user.id}-${Date.now()}.${ext}`
+    const filename = `${folder}-${session.user.id}-${Date.now()}.${ext}`
     const filepath = path.join(uploadDir, filename)
 
     // Écrire le fichier
@@ -44,13 +47,15 @@ export async function POST(req: Request) {
     await writeFile(filepath, buffer)
 
     // URL publique
-    const imageUrl = `/uploads/profiles/${filename}`
+    const imageUrl = `/uploads/${folder}/${filename}`
 
-    // Mettre à jour en base de données
-    await prisma.user.update({
-      where: { id: session.user.id },
-      data: { profileImage: imageUrl }
-    })
+    // Mettre à jour en base de données si upload profil
+    if (isProfileUpload) {
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: { profileImage: imageUrl }
+      })
+    }
 
     return NextResponse.json({ imageUrl }, { status: 200 })
   } catch (error) {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 
 const navLinks = [
@@ -16,6 +17,8 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const isLoggedIn = !!session?.user;
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export default function Header() {
       >
         {/* LOGO */}
         <Link
-          href="#accueil"
+          href={isHomePage ? "#accueil" : "/"}
           style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}
         >
           <div style={{ position: "relative", width: "50px", height: "50px" }}>
@@ -61,6 +64,8 @@ export default function Header() {
               alt="La Manne Spirituelle Logo"
               fill
               sizes="50px"
+              priority
+              loading="eager"
               style={{ objectFit: "contain", borderRadius: "50%" }}
             />
           </div>
@@ -92,17 +97,47 @@ export default function Header() {
 
         {/* DESKTOP NAV */}
         <nav style={{ display: "flex", alignItems: "center", gap: "8px" }} className="hide-mobile">
-          {navLinks.map((link) => (
+          {isHomePage ? (
+            navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{
+                  textDecoration: "none",
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  color: scrolled ? "#374151" : "rgba(255,255,255,0.9)",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLElement).style.color = "#0EA5E9";
+                  (e.target as HTMLElement).style.background = "rgba(14,165,233,0.08)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLElement).style.color = scrolled
+                    ? "#374151"
+                    : "rgba(255,255,255,0.9)";
+                  (e.target as HTMLElement).style.background = "transparent";
+                }}
+              >
+                {link.label}
+              </Link>
+            ))
+          ) : (
             <Link
-              key={link.href}
-              href={link.href}
+              href="/"
               style={{
                 textDecoration: "none",
                 padding: "8px 16px",
                 borderRadius: "8px",
                 fontSize: "14px",
-                fontWeight: 500,
-                color: scrolled ? "#374151" : "rgba(255,255,255,0.9)",
+                fontWeight: 600,
+                color: scrolled ? "#374151" : "rgba(255,255,255,0.95)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
                 transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
@@ -112,18 +147,39 @@ export default function Header() {
               onMouseLeave={(e) => {
                 (e.target as HTMLElement).style.color = scrolled
                   ? "#374151"
-                  : "rgba(255,255,255,0.9)";
+                  : "rgba(255,255,255,0.95)";
                 (e.target as HTMLElement).style.background = "transparent";
               }}
             >
-              {link.label}
+              ← Retour à l'accueil
             </Link>
-          ))}
-          {/* Boutons Connexion / Profil */}
+          )}
+          {/* Boutons Connexion / Profil / Admin */}
           {isLoggedIn ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "8px" }}>
+              {(session?.user?.roles?.includes("ADMIN") || session?.user?.roles?.includes("SUPERADMIN")) && (
+                <Link
+                  href="/admin"
+                  style={{
+                    textDecoration: "none",
+                    padding: "8px 14px",
+                    borderRadius: "8px",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    color: "#fff",
+                    background: "linear-gradient(135deg, #0EA5E9, #0284C7)",
+                    boxShadow: "0 2px 10px rgba(14,165,233,0.3)",
+                    transition: "all 0.2s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
+                >
+                  ⚡ SuperAdmin
+                </Link>
+              )}
               <Link
-                href="/profil"
+                href="/membre/profil"
                 style={{
                   textDecoration: "none",
                   padding: "8px 16px",
@@ -140,7 +196,10 @@ export default function Header() {
                 👤 Mon Profil
               </Link>
               <button
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={async () => {
+                  await signOut({ redirect: false })
+                  window.location.href = "/"
+                }}
                 style={{
                   padding: "10px 20px",
                   borderRadius: "50px",
@@ -224,29 +283,64 @@ export default function Header() {
             boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
           }}
         >
-          {navLinks.map((link) => (
+          {isHomePage ? (
+            navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  padding: "12px 0",
+                  textDecoration: "none",
+                  color: "#374151",
+                  fontWeight: 500,
+                  fontSize: "15px",
+                  borderBottom: "1px solid #F3F4F6",
+                }}
+              >
+                {link.label}
+              </Link>
+            ))
+          ) : (
             <Link
-              key={link.href}
-              href={link.href}
+              href="/"
               onClick={() => setMenuOpen(false)}
               style={{
                 display: "block",
                 padding: "12px 0",
                 textDecoration: "none",
                 color: "#374151",
-                fontWeight: 500,
+                fontWeight: 600,
                 fontSize: "15px",
                 borderBottom: "1px solid #F3F4F6",
               }}
             >
-              {link.label}
+              ← Retour à l'accueil
             </Link>
-          ))}
+          )}
           {/* Mobile: Boutons Connexion/Profil */}
           {isLoggedIn ? (
             <>
+              {(session?.user?.roles?.includes("ADMIN") || session?.user?.roles?.includes("SUPERADMIN")) && (
+                <Link
+                  href="/admin"
+                  onClick={() => setMenuOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "12px 0",
+                    textDecoration: "none",
+                    color: "#0284c7",
+                    fontWeight: 700,
+                    fontSize: "15px",
+                    borderBottom: "1px solid #F3F4F6",
+                  }}
+                >
+                  ⚡ Espace SuperAdmin
+                </Link>
+              )}
               <Link
-                href="/profil"
+                href="/membre/profil"
                 onClick={() => setMenuOpen(false)}
                 style={{
                   display: "block",
@@ -261,7 +355,11 @@ export default function Header() {
                 👤 Mon Profil
               </Link>
               <button
-                onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/" }) }}
+                onClick={async () => {
+                  setMenuOpen(false)
+                  await signOut({ redirect: false })
+                  window.location.href = "/"
+                }}
                 style={{
                   display: "block",
                   width: "100%",

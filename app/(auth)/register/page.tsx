@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -104,17 +105,43 @@ export default function RegisterPage() {
         {/* Cercles décoratifs */}
         <div style={{ position: "absolute", top: "-80px", left: "-80px", width: "300px", height: "300px", borderRadius: "50%", background: "rgba(14,165,233,0.15)", filter: "blur(40px)" }} />
         <div style={{ position: "absolute", bottom: "-60px", right: "-60px", width: "250px", height: "250px", borderRadius: "50%", background: "rgba(56,189,248,0.2)", filter: "blur(50px)" }} />
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "400px", height: "400px", borderRadius: "50%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }} />
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "420px", height: "420px", borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,233,0.12) 0%, rgba(255,255,255,0.03) 70%, transparent 100%)", border: "1px solid rgba(255,255,255,0.12)", pointerEvents: "none" }} />
 
         {/* Contenu */}
         <div style={{ position: "relative", zIndex: 1, textAlign: "center", color: "#fff" }}>
-          <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", fontSize: "2rem" }}>
-            ✝
+          {/* Logo dans le cercle lumineux */}
+          <div
+            style={{
+              position: "relative",
+              width: "88px",
+              height: "88px",
+              borderRadius: "50%",
+              background: "#ffffff",
+              padding: "4px",
+              boxShadow: "0 0 35px rgba(14, 165, 233, 0.6), 0 8px 24px rgba(0, 0, 0, 0.3)",
+              border: "3px solid rgba(255, 255, 255, 0.9)",
+              margin: "0 auto 1.5rem",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              src="/logo.jpg"
+              alt="Logo La Manne Spirituelle"
+              fill
+              sizes="88px"
+              style={{ objectFit: "contain", borderRadius: "50%" }}
+              priority
+              loading="eager"
+            />
           </div>
+
           <h1 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: "1rem", lineHeight: 1.2 }}>
             La Manne<br />Spirituelle
           </h1>
-          <p style={{ fontSize: "1rem", opacity: 0.8, maxWidth: "280px", lineHeight: 1.7 }}>
+          <p style={{ fontSize: "1rem", opacity: 0.85, maxWidth: "280px", lineHeight: 1.7, margin: "0 auto" }}>
             Rejoignez notre communauté de foi et participez à nos activités et projets.
           </p>
           <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>

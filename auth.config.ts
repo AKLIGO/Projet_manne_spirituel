@@ -23,21 +23,29 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.roles = (user as any).roles || []
         token.id = user.id
       }
       return token
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.role = token.role as any
+        session.user.roles = (token.roles as string[]) || []
         session.user.id = token.id as string
       }
       return session
     },
+    async redirect({ url, baseUrl }) {
+      if (url.includes("0.0.0.0")) {
+        return url.replace("0.0.0.0", "localhost")
+      }
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
-      const protectedPaths = ['/profil', '/dashboard']
+      const protectedPaths = ['/profil', '/dashboard', '/admin']
       const isProtected = protectedPaths.some(path => nextUrl.pathname.startsWith(path))
 
       if (isProtected && !isLoggedIn) {

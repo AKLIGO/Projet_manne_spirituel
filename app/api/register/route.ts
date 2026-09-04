@@ -26,8 +26,17 @@ export async function POST(req: Request) {
         lastName,
         email,
         passwordHash: hashedPassword,
-        role: 'VISITOR',
-      }
+        church: church || null,
+        roles: {
+          connectOrCreate: {
+            where: { name: "VISITEUR" },
+            create: {
+              name: "VISITEUR",
+              description: "Visiteur ou nouvel inscrit sur la plateforme",
+            },
+          },
+        },
+      },
     })
 
     return NextResponse.json({ message: 'Compte créé avec succès', userId: user.id }, { status: 201 })

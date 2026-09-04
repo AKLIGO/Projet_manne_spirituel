@@ -5,7 +5,7 @@ import { authConfig } from "./auth.config"
 
 const { auth } = NextAuth(authConfig)
 
-const protectedRoutes = ["/profil", "/dashboard"]
+const protectedRoutes = ["/profil", "/dashboard", "/admin"]
 const authRoutes = ["/login", "/register"]
 
 export async function proxy(request: NextRequest) {

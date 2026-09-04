@@ -245,6 +245,7 @@ export type ProjectWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   authorId?: Prisma.StringFilter<"Project"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  team?: Prisma.ProjectMemberListRelationFilter
   donations?: Prisma.DonationListRelationFilter
   media?: Prisma.MediaListRelationFilter
 }
@@ -259,6 +260,7 @@ export type ProjectOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
+  team?: Prisma.ProjectMemberOrderByRelationAggregateInput
   donations?: Prisma.DonationOrderByRelationAggregateInput
   media?: Prisma.MediaOrderByRelationAggregateInput
   _relevance?: Prisma.ProjectOrderByRelevanceInput
@@ -277,6 +279,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   authorId?: Prisma.StringFilter<"Project"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  team?: Prisma.ProjectMemberListRelationFilter
   donations?: Prisma.DonationListRelationFilter
   media?: Prisma.MediaListRelationFilter
 }, "id">
@@ -319,7 +322,8 @@ export type ProjectCreateInput = {
   currentAmount?: number
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
-  author: Prisma.UserCreateNestedOneWithoutProjectsInput
+  author: Prisma.UserCreateNestedOneWithoutCreatedProjectsInput
+  team?: Prisma.ProjectMemberCreateNestedManyWithoutProjectInput
   donations?: Prisma.DonationCreateNestedManyWithoutProjectInput
   media?: Prisma.MediaCreateNestedManyWithoutProjectInput
 }
@@ -333,6 +337,7 @@ export type ProjectUncheckedCreateInput = {
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
   authorId: string
+  team?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutProjectInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.MediaUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -345,7 +350,8 @@ export type ProjectUpdateInput = {
   currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  author?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  author?: Prisma.UserUpdateOneRequiredWithoutCreatedProjectsNestedInput
+  team?: Prisma.ProjectMemberUpdateManyWithoutProjectNestedInput
   donations?: Prisma.DonationUpdateManyWithoutProjectNestedInput
   media?: Prisma.MediaUpdateManyWithoutProjectNestedInput
 }
@@ -359,6 +365,7 @@ export type ProjectUncheckedUpdateInput = {
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  team?: Prisma.ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -454,6 +461,11 @@ export type ProjectSumOrderByAggregateInput = {
   currentAmount?: Prisma.SortOrder
 }
 
+export type ProjectScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput
+  isNot?: Prisma.ProjectWhereInput
+}
+
 export type ProjectNullableScalarRelationFilter = {
   is?: Prisma.ProjectWhereInput | null
   isNot?: Prisma.ProjectWhereInput | null
@@ -521,6 +533,20 @@ export type EnumProjectStatusFieldUpdateOperationsInput = {
   set?: $Enums.ProjectStatus
 }
 
+export type ProjectCreateNestedOneWithoutTeamInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTeamInput, Prisma.ProjectUncheckedCreateWithoutTeamInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTeamInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTeamInput, Prisma.ProjectUncheckedCreateWithoutTeamInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTeamInput
+  upsert?: Prisma.ProjectUpsertWithoutTeamInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutTeamInput, Prisma.ProjectUpdateWithoutTeamInput>, Prisma.ProjectUncheckedUpdateWithoutTeamInput>
+}
+
 export type ProjectCreateNestedOneWithoutDonationsInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutDonationsInput, Prisma.ProjectUncheckedCreateWithoutDonationsInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutDonationsInput
@@ -561,6 +587,7 @@ export type ProjectCreateWithoutAuthorInput = {
   currentAmount?: number
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  team?: Prisma.ProjectMemberCreateNestedManyWithoutProjectInput
   donations?: Prisma.DonationCreateNestedManyWithoutProjectInput
   media?: Prisma.MediaCreateNestedManyWithoutProjectInput
 }
@@ -573,6 +600,7 @@ export type ProjectUncheckedCreateWithoutAuthorInput = {
   currentAmount?: number
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  team?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutProjectInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.MediaUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -617,6 +645,74 @@ export type ProjectScalarWhereInput = {
   authorId?: Prisma.StringFilter<"Project"> | string
 }
 
+export type ProjectCreateWithoutTeamInput = {
+  id?: string
+  title: string
+  description: string
+  targetAmount?: number | null
+  currentAmount?: number
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  author: Prisma.UserCreateNestedOneWithoutCreatedProjectsInput
+  donations?: Prisma.DonationCreateNestedManyWithoutProjectInput
+  media?: Prisma.MediaCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutTeamInput = {
+  id?: string
+  title: string
+  description: string
+  targetAmount?: number | null
+  currentAmount?: number
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  authorId: string
+  donations?: Prisma.DonationUncheckedCreateNestedManyWithoutProjectInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutTeamInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutTeamInput, Prisma.ProjectUncheckedCreateWithoutTeamInput>
+}
+
+export type ProjectUpsertWithoutTeamInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutTeamInput, Prisma.ProjectUncheckedUpdateWithoutTeamInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutTeamInput, Prisma.ProjectUncheckedCreateWithoutTeamInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutTeamInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutTeamInput, Prisma.ProjectUncheckedUpdateWithoutTeamInput>
+}
+
+export type ProjectUpdateWithoutTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  author?: Prisma.UserUpdateOneRequiredWithoutCreatedProjectsNestedInput
+  donations?: Prisma.DonationUpdateManyWithoutProjectNestedInput
+  media?: Prisma.MediaUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  donations?: Prisma.DonationUncheckedUpdateManyWithoutProjectNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutProjectNestedInput
+}
+
 export type ProjectCreateWithoutDonationsInput = {
   id?: string
   title: string
@@ -625,7 +721,8 @@ export type ProjectCreateWithoutDonationsInput = {
   currentAmount?: number
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
-  author: Prisma.UserCreateNestedOneWithoutProjectsInput
+  author: Prisma.UserCreateNestedOneWithoutCreatedProjectsInput
+  team?: Prisma.ProjectMemberCreateNestedManyWithoutProjectInput
   media?: Prisma.MediaCreateNestedManyWithoutProjectInput
 }
 
@@ -638,6 +735,7 @@ export type ProjectUncheckedCreateWithoutDonationsInput = {
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
   authorId: string
+  team?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.MediaUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -665,7 +763,8 @@ export type ProjectUpdateWithoutDonationsInput = {
   currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  author?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  author?: Prisma.UserUpdateOneRequiredWithoutCreatedProjectsNestedInput
+  team?: Prisma.ProjectMemberUpdateManyWithoutProjectNestedInput
   media?: Prisma.MediaUpdateManyWithoutProjectNestedInput
 }
 
@@ -678,6 +777,7 @@ export type ProjectUncheckedUpdateWithoutDonationsInput = {
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  team?: Prisma.ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -689,7 +789,8 @@ export type ProjectCreateWithoutMediaInput = {
   currentAmount?: number
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
-  author: Prisma.UserCreateNestedOneWithoutProjectsInput
+  author: Prisma.UserCreateNestedOneWithoutCreatedProjectsInput
+  team?: Prisma.ProjectMemberCreateNestedManyWithoutProjectInput
   donations?: Prisma.DonationCreateNestedManyWithoutProjectInput
 }
 
@@ -702,6 +803,7 @@ export type ProjectUncheckedCreateWithoutMediaInput = {
   status?: $Enums.ProjectStatus
   createdAt?: Date | string
   authorId: string
+  team?: Prisma.ProjectMemberUncheckedCreateNestedManyWithoutProjectInput
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -729,7 +831,8 @@ export type ProjectUpdateWithoutMediaInput = {
   currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  author?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  author?: Prisma.UserUpdateOneRequiredWithoutCreatedProjectsNestedInput
+  team?: Prisma.ProjectMemberUpdateManyWithoutProjectNestedInput
   donations?: Prisma.DonationUpdateManyWithoutProjectNestedInput
 }
 
@@ -742,6 +845,7 @@ export type ProjectUncheckedUpdateWithoutMediaInput = {
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  team?: Prisma.ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -763,6 +867,7 @@ export type ProjectUpdateWithoutAuthorInput = {
   currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team?: Prisma.ProjectMemberUpdateManyWithoutProjectNestedInput
   donations?: Prisma.DonationUpdateManyWithoutProjectNestedInput
   media?: Prisma.MediaUpdateManyWithoutProjectNestedInput
 }
@@ -775,6 +880,7 @@ export type ProjectUncheckedUpdateWithoutAuthorInput = {
   currentAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team?: Prisma.ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
   donations?: Prisma.DonationUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -795,11 +901,13 @@ export type ProjectUncheckedUpdateManyWithoutAuthorInput = {
  */
 
 export type ProjectCountOutputType = {
+  team: number
   donations: number
   media: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  team?: boolean | ProjectCountOutputTypeCountTeamArgs
   donations?: boolean | ProjectCountOutputTypeCountDonationsArgs
   media?: boolean | ProjectCountOutputTypeCountMediaArgs
 }
@@ -812,6 +920,13 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProjectCountOutputType
    */
   select?: Prisma.ProjectCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountTeamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectMemberWhereInput
 }
 
 /**
@@ -839,6 +954,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   authorId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  team?: boolean | Prisma.Project$teamArgs<ExtArgs>
   donations?: boolean | Prisma.Project$donationsArgs<ExtArgs>
   media?: boolean | Prisma.Project$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -860,6 +976,7 @@ export type ProjectSelectScalar = {
 export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "targetAmount" | "currentAmount" | "status" | "createdAt" | "authorId", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  team?: boolean | Prisma.Project$teamArgs<ExtArgs>
   donations?: boolean | Prisma.Project$donationsArgs<ExtArgs>
   media?: boolean | Prisma.Project$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -869,6 +986,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Project"
   objects: {
     author: Prisma.$UserPayload<ExtArgs>
+    team: Prisma.$ProjectMemberPayload<ExtArgs>[]
     donations: Prisma.$DonationPayload<ExtArgs>[]
     media: Prisma.$MediaPayload<ExtArgs>[]
   }
@@ -1222,6 +1340,7 @@ readonly fields: ProjectFieldRefs;
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  team<T extends Prisma.Project$teamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$teamArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   donations<T extends Prisma.Project$donationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   media<T extends Prisma.Project$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1606,6 +1725,30 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Projects to delete.
    */
   limit?: number
+}
+
+/**
+ * Project.team
+ */
+export type Project$teamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectMember
+   */
+  select?: Prisma.ProjectMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectMember
+   */
+  omit?: Prisma.ProjectMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectMemberInclude<ExtArgs> | null
+  where?: Prisma.ProjectMemberWhereInput
+  orderBy?: Prisma.ProjectMemberOrderByWithRelationInput | Prisma.ProjectMemberOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectMemberScalarFieldEnum | Prisma.ProjectMemberScalarFieldEnum[]
 }
 
 /**

@@ -8,8 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Role'
 export type * from './models/User'
 export type * from './models/Project'
+export type * from './models/ProjectMember'
 export type * from './models/Activity'
 export type * from './models/Registration'
 export type * from './models/Donation'

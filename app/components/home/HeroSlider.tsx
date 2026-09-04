@@ -12,7 +12,7 @@ const slides = [
     tagline: "ASSOCIATION LA MANNE SPIRITUELLE",
     cta: "Découvrir nos activités",
     ctaHref: "#activites",
-    image: "/hero/slide1.png",
+    image: "/hero-1.jpg",
     emoji: "🌿",
   },
   {
@@ -22,7 +22,7 @@ const slides = [
     tagline: "ÉVANGÉLISATION & ENTRAIDE",
     cta: "À propos de nous",
     ctaHref: "#apropos",
-    image: "/hero/slide2.png",
+    image: "/hero-2.jpg",
     emoji: "🤝",
   },
   {
@@ -32,8 +32,18 @@ const slides = [
     tagline: "MISSION & SPIRITUALITÉ",
     cta: "Nous rejoindre",
     ctaHref: "#contact",
-    image: "/hero/slide3.png",
+    image: "/hero-3.jpg",
     emoji: "✨",
+  },
+  {
+    id: 4,
+    title: "Annoncer la",
+    subtitle: "Bonne Nouvelle",
+    tagline: "ÉVANGÉLISATION PUBLIQUE",
+    cta: "Soutenir la mission",
+    ctaHref: "#dons",
+    image: "/hero-4.jpg",
+    emoji: "📖",
   },
 ];
 

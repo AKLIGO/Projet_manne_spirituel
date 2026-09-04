@@ -10,12 +10,6 @@ datasource db {
 // ==========================================
 // 1. ÉNUMÉRATIONS (Listes de choix fixes)
 // ==========================================
-enum Role {
-  ADMIN
-  MEMBER
-  VISITOR
-}
-
 enum ProjectStatus {
   PLANNING   
   ACTIVE     
@@ -31,6 +25,15 @@ enum MediaType {
 // 2. MODÈLES PRINCIPAUX (Tables)
 // ==========================================
 
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // ex: "SUPERADMIN", "ADMIN", "PASTEUR", "TRESORIER", "MEMBRE", "VISITEUR"
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+
+  users       User[]
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -42,12 +45,13 @@ model User {
   bio           String?   @db.Text
   church        String?   
 
-  role          Role      @default(VISITOR)
+  roles         Role[]
   createdAt     DateTime  @default(now())
 
-  projects      Project[]      
-  registrations Registration[] 
-  donations     Donation[]     
+  createdProjects    Project[]       @relation("ProjectAuthor")
+  projectAssignments ProjectMember[]
+  registrations      Registration[] 
+  donations          Donation[]     
 }
 
 model Project {
@@ -60,9 +64,25 @@ model Project {
   createdAt     DateTime      @default(now())
 
   authorId      String
-  author        User          @relation(fields: [authorId], references: [id])
+  author        User          @relation("ProjectAuthor", fields: [authorId], references: [id])
+  team          ProjectMember[]
   donations     Donation[]    
   media         Media[]       
+}
+
+model ProjectMember {
+  id          String   @id @default(cuid())
+  role        String   @default("Membre de l'équipe") // ex: "Responsable de Projet", "Trésorier", "Coordinateur", "Bénévole"
+  notes       String?  @db.Text // Description de la mission ou tâches de l'intervenant
+  assignedAt  DateTime @default(now())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
 }
 
 model Activity {
